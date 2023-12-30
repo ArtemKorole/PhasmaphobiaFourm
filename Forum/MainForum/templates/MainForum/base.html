@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'MainForum/css/styles.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+<div class="page">
+    <div class="nav">
+        <div class="nav_content">
+            <a href="/" class = 'ref'>Главная |</a>
+            <a href=""  class = 'ref'>Форум |</a>
+            <a href="{% url 'about' %}"  class = 'ref'>О нас</a>
+        </div>
+    </div>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+</body>
+</html>

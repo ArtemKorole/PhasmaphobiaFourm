@@ -1,0 +1,61 @@
+{% extends 'MainForum/base.html' %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class = 'header1'>Phasmafobia форум</h1>
+    <h2>Категории призраков:</h2>
+
+    {% for i in categories %}
+        <div class="ghost_category">
+            <a href= "{% url 'ghost_cat' id=i.id %}"  class = 'ref'><h2>{{i.name}}</h2></a><br>
+            <h3>Описание:</h3>
+            <p class = "cat_description">{{i.description}}</p>
+        </div>
+    {% endfor %}
+
+    <a class = "ref" href = "{% url 'journal' %}"><button class = "but1">Открыть журнал</button></a>
+
+    <h1 class = 'header1'>Карты игры</h1>
+    <ul>
+        {% for i in all_carts %}
+            <a href='{% url "cart" id=i.id %}' class = 'cart_header'><li>{{ i.name }}</li></a>
+        {% endfor %}
+    </ul>
+
+    <div class = 'ghost_event_cont'>
+        <h1 class ='header1'>Призраычные события и их виды</h1>
+        <strong><p>Призрачное событие — это проявление призрака в мире смертных, отличное от охоты и не
+            взаимодействующее напрямую с окружающей средой (в отличие от взаимодействия ). События с призраками
+            варьируются от физических видений до простых клубов дыма и обычно производят звуки (шипение, стоны, пение и
+            т. д.), которые можно услышать без использования специального оборудования .</p></strong>
+
+        {% for i in all_ghost_events %}
+        <strong><li>{{ i.name }}</li></strong>
+            <p>{{ i.description }}</p>
+            <img class="event_img" src="{{ i.img_url }}" alt="">
+        {% endfor %}
+
+    </div>
+
+    <div class="container">
+        <h1>Улики призраков</h1>
+        {% for i in all_evidences %}
+            <strong><p>{{ i.name }}</p></strong>
+            <p>{{ i.description }}</p>
+            <img class="event_img" src="{{ i.img_url }}" alt="">
+        {% endfor %}
+    </div> </div>
+
+<!--<div class="container">-->
+<!--    <h1>Phasmafobia форум</h1>-->
+<!--    <a href="{% url 'journal' %}" class='ref'><h1>Призраки</h1></a>-->
+<!--    <a href="{% url 'journal' %}" class='ref'><h1>Категории</h1></a>-->
+<!--    <a href="" class = 'ref'><h1>Карты</h1></a>-->
+<!--    <a href="" class = 'ref'><h1>Улики</h1></a>-->
+<!--    <a href="" class = 'ref'><h1>Призрачные события</h1></a>-->
+<!--    <a href="" class = 'ref'><h1>Проклятые предметы</h1></a>-->
+<!--    <a href="" class = 'ref'><h1>Экипировка</h1></a>-->
+<!--</div>-->
+
+{% endblock %}

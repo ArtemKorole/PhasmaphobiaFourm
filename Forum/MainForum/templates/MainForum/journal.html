@@ -1,0 +1,12 @@
+{% extends 'MainForum/base.html' %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+
+<div class = 'journal_wrapper'>
+    {% for i in all_ghosts %}
+        <a class = "ref" href="{% url 'ghost' id=i.id %}"><h2>{{ i.name }}</h2></a>
+    {% endfor %}
+</div>
+
+{% endblock %}

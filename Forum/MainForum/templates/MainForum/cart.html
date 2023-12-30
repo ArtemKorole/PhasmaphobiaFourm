@@ -1,0 +1,11 @@
+{% extends 'MainForum/base.html' %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+
+    <h1>{{ cart.name }}</h1>
+    <h2>Описание</h2>
+    <p>{{ cart.description }}</p>
+    <img src="{{ cart.img_url }}" alt="">
+
+{% endblock %}

@@ -1,0 +1,108 @@
+*{
+    font-family:'Arial';
+    margin:0;
+    padding:0;
+}
+
+
+
+.container{
+    text-align:center;
+}
+
+.nav{
+    display:block;
+    background-color:#14708acf;
+    margin-bottom:20px;
+    color:white;
+    position:relative;
+    height:70px
+}
+
+.nav a{
+    color:white;
+    margin-left:10px;
+    font-size:19px;
+}
+
+.nav_content{
+    position:relative;
+    left:20px;
+    top:22px
+}
+
+.cat_description{
+    width:300px;
+    position:relative;
+    left:15%
+}
+
+.ghost_category{
+    background-color:#8dafdb;
+    width:400px;
+    height:150px;
+    position:relative;
+    left:37%;
+    margin:16px;
+    padding:7px;
+    border-radius:6px
+}
+
+.ref{
+   text-decoration:none;
+    color:black;
+}
+
+.ghost_img{
+    height:400px;
+    width:500px;
+}
+
+.journal_wrapper{
+    display:grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-column-gap: 150px;
+    margin:45px auto;
+    grid-row-gap: 45px;
+    width:min-content;
+    background-color:#c2c7ae;
+    padding:25px;
+    border-radius:7px
+}
+
+.but1{
+    background-color:#d7e3aa;
+    padding:4px;
+    border:0.5px solid black;
+    border-radius:4px;
+    margin-bottom:30px
+}
+
+.cart_img{
+     height:300px;
+     width:300px;
+}
+
+.header1{
+    margin-bottom:23px
+}
+
+.cart_header{
+    margin:10px
+}
+
+.event_img{
+    height:300px;
+    width:400px;
+    border-radius:4px
+}
+
+.ghost_event_cont{
+    width:600px;
+    position:relative;
+    left:34%;
+}
+
+.ghost_event_cont *{
+    margin:4px
+}

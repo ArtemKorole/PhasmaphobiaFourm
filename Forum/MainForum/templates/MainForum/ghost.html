@@ -1,0 +1,14 @@
+{% extends 'MainForum/base.html' %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1>{{ ghost.name }}</h1>
+    <h2>Описание:</h2>
+    <p>{{ ghost.description }}</p>
+    <strong><p>Номер в журнале {{ ghost.number }}</p></strong>
+    <img class = "ghost_img" src="{{ ghost.img_url }}" alt="">
+</div>
+
+{% endblock %}
