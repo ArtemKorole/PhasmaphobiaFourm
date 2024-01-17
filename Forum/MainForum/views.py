@@ -13,7 +13,7 @@ def index(request):
     return render(request, 'MainForum/index.html', data)
 
 
-def ghost_cat(request, id: int):
+def ghost_category(request, id: int):
     data = {
         'ghosts': get_ghosts_by_cat_id(id),
     }
