@@ -5,7 +5,7 @@
 
 <div class = 'journal_wrapper'>
     {% for i in all_ghosts %}
-        <a class = "ref" href="{% url 'ghost' id=i.id %}"><h2>{{ i.name }}</h2></a>
+        <a class = "ref" href="{{ i.get_absolute_url }}"><h2>{{ i.name }}</h2></a>
     {% endfor %}
 </div>
 

@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 
 class Ghost_category(models.Model):
     name = models.CharField(max_length=100)
@@ -6,16 +8,29 @@ class Ghost_category(models.Model):
     def __str__(self):
         return self.name
 
+# class HardCategoryGostsManager(models.Manager):
+#     def get_queryset(self):
+#         return super().get_queryset().filter(category=1)
+
 class Ghost(models.Model):
+    class Status(models.IntegerChoices):
+        HARD = 1, 'Сложные'
+        MIDDLE = 2, 'Средние'
+        EASY = 3, 'Легкие'
+
     name = models.CharField(max_length=40)
     slug = models.SlugField(max_length=120, unique=True, db_index=True)
     number = models.IntegerField()
-    category = models.ForeignKey(Ghost_category,on_delete=models.PROTECT)
+    category = models.ForeignKey(Ghost_category, choices=Status.choices, on_delete=models.PROTECT, default=Status.EASY)
     img_url = models.TextField()
     description = models.TextField(max_length=500)
-
+    # Hard_Ghosts = HardCategoryGostsManager()
+    # objects = models.Manager()
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return  reverse('slug_ghost', kwargs={'ghost_slug': self.slug})
 
 class Map(models.Model):
     name = models.CharField(max_length=100)

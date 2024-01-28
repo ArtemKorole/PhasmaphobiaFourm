@@ -1,7 +1,7 @@
 from MainForum.models import *
 
 def get_ghosts_by_cat_id(id):
-    ghosts_this_category = Ghost.objects.filter(category_id = id)
+    ghosts_this_category = Ghost.objects.filter(category_id=id)
     return ghosts_this_category
 
 def get_ghost_by_id(id):

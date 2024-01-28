@@ -4,7 +4,7 @@
 {% block content %}
 
 {% for i in ghosts %}
-    <a href = "{% url 'ghost' id=i.id %}"  class = 'ref'><h1>{{i.name}}</h1></a>
+    <a href = "{{ i.get_absolute_url }}"  class = 'ref'><h1>{{i.name}}</h1></a>
     <h2>Описание:</h2>
     <p>{{i.description}}</p>
     <strong><p>Номер в журнале:{{i.number}}</p></strong>
