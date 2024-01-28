@@ -8,6 +8,7 @@ class Ghost_category(models.Model):
 
 class Ghost(models.Model):
     name = models.CharField(max_length=40)
+    slug = models.SlugField(max_length=120, unique=True, db_index=True)
     number = models.IntegerField()
     category = models.ForeignKey(Ghost_category,on_delete=models.PROTECT)
     img_url = models.TextField()
@@ -63,5 +64,3 @@ class Cursed_items(models.Model):
 
     def __str__(self):
         return self.name
-
-

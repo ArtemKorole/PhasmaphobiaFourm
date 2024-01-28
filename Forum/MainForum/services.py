@@ -8,6 +8,10 @@ def get_ghost_by_id(id):
     ghost = Ghost.objects.get(id = id)
     return ghost
 
+def get_ghost_by_slug(slug):
+    ghost = Ghost.objects.get(slug=slug)
+    return ghost
+
 def get_cart_by_id(id):
     cart = Map.objects.get(id = id)
     return cart

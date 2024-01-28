@@ -19,6 +19,11 @@ def ghost_category(request, id: int):
     }
     return render(request, 'MainForum/ghost_categories.html', data)
 
+def ghost_slug(request, ghost_slug: str):
+    data = {
+        'ghost': get_ghost_by_slug(ghost_slug)
+    }
+    return render(request, 'MainForum/ghost.html', data)
 
 def ghost(request, id: int):
     data = {
