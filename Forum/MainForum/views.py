@@ -10,6 +10,12 @@ def index(request):
         'all_ghost_events': Ghost_event.objects.all(),
         'all_evidences': Evidence.objects.all(),
     }
+
+    # yurei = Ghost.objects.get(pk=2)
+    # defaultTeg = TagGhost.objects.get(pk=3)
+    # # hardTag = TagGhost.objects.get(pk=1)
+    # yurei.tags.set([defaultTeg])
+
     return render(request, 'MainForum/index.html', data)
 
 
@@ -39,7 +45,7 @@ def journal(request):
     return render(request, 'MainForum/journal.html', data)
 
 
-def cart(request, id):
+def cart(request, id: int):
     data = {
         'cart': get_cart_by_id(id),
     }
@@ -48,3 +54,12 @@ def cart(request, id):
 
 def about(request):
     return render(request, 'MainForum/about.html')
+
+def get_ghosts_by_tag(request, tag_slug):
+    return render(request, 'MainForum/ghosts_by_tag.html', get_ghosts_by_tag_slug(tag_slug) )
+
+def show_tags(request):
+    data = {
+        'tags':get_all_tags()
+    }
+    return render(request, "MainForum/tags_list.html", data)

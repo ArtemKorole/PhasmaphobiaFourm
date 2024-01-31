@@ -1,0 +1,9 @@
+{% extends 'MainForum/base.html' %}
+{% block title %}Теги{% endblock %}
+
+{% block content %}
+
+{% for i in tags %}
+    <h1><a href="{{ i.get_absolute_url}}">{{ i.tag}}</a></h1>
+{% endfor %}
+{% endblock %}

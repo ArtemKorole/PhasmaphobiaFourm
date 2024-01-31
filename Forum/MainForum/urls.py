@@ -9,4 +9,6 @@ urlpatterns = [
     path('journal',views.journal,name = 'journal'),
     path('cart/<int:id>',views.cart,name = 'cart'),
     path('about_us',views.about,name = 'about'),
+    path('tag/<slug:tag_slug>',views.get_ghosts_by_tag,name = 'tag'),
+    path('tags/',views.show_tags,name = 'tags'),
 ]

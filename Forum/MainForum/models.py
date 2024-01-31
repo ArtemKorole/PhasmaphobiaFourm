@@ -21,9 +21,11 @@ class Ghost(models.Model):
     name = models.CharField(max_length=40)
     slug = models.SlugField(max_length=120, unique=True, db_index=True)
     number = models.IntegerField()
-    category = models.ForeignKey(Ghost_category, choices=Status.choices, on_delete=models.PROTECT, default=Status.EASY)
+    category = models.ForeignKey(Ghost_category, choices=Status.choices, on_delete=models.PROTECT, default=Status.EASY, related_name='ghosts')
     img_url = models.TextField()
     description = models.TextField(max_length=500)
+    tags = models.ManyToManyField('TagGhost', blank=True, related_name='tags')
+
     # Hard_Ghosts = HardCategoryGostsManager()
     # objects = models.Manager()
     def __str__(self):
@@ -31,6 +33,16 @@ class Ghost(models.Model):
 
     def get_absolute_url(self):
         return  reverse('slug_ghost', kwargs={'ghost_slug': self.slug})
+
+class TagGhost(models.Model):
+    tag = models.CharField(max_length=120)
+    slug = models.SlugField(max_length=120, unique=True)
+
+    def get_absolute_url(self):
+        return  reverse('tag', kwargs={'tag_slug': self.slug})
+
+    def __str__(self):
+        return self.tag
 
 class Map(models.Model):
     name = models.CharField(max_length=100)

@@ -1,0 +1,12 @@
+{% extends 'MainForum/base.html' %}
+{% block title %}{{ tag }}{% endblock %}
+
+{% block content %}
+<h1>#{{ tag }}</h1><br><br>
+{% for i in ghosts %}
+
+    <h2><a href="{{ i.get_absolute_url }}">{{ i.name }}</a></h2>
+    <p>{{ i.description }}</p>
+
+{% endfor %}
+{% endblock %}
