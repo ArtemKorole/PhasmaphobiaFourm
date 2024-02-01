@@ -9,6 +9,12 @@
     <p>{{ ghost.description }}</p>
     <strong><p>Номер в <a href = "{% url 'journal' %}">журнале</a> {{ ghost.number }}</p></strong>
     <img class = "ghost_img" src="{{ ghost.img_url }}" alt="">
+    <h2>Теги этого призрака:</h2>
+    <ul>
+        {% for i in tags %}
+            <li><a href = "{{ i.get_absolute_url }}">{{ i.tag }}</a></li>
+        {% endfor %}
+    </ul>
 </div>
 
 {% endblock %}

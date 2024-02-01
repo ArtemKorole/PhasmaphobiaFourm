@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,6 +23,10 @@ SECRET_KEY = 'django-insecure-j(wlklwvaqrfgu6+xk)#9iuq(7dwkkh1&6s2bh40y0rois$lz_
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 ALLOWED_HOSTS = []
 
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MainForum',
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -48,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'Forum.urls'

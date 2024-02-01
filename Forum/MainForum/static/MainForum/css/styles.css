@@ -5,7 +5,6 @@
 }
 
 
-
 .container{
     text-align:center;
 }
@@ -105,4 +104,21 @@
 
 .ghost_event_cont *{
     margin:4px
+}
+
+.ghost_cart{
+    display:inline-block;
+    text-align:center;
+    background-color:#2f2e3b;
+    border:0.5px solid black;
+    border-radius:4px;
+    color:#b8b8b8;
+    margin:20px;
+    width:40%;
+    padding:4px;
+}
+
+.ref2{
+    color:white;
+    text-decoration:none;
 }

@@ -22,7 +22,7 @@ class Ghost(models.Model):
     slug = models.SlugField(max_length=120, unique=True, db_index=True)
     number = models.IntegerField()
     category = models.ForeignKey(Ghost_category, choices=Status.choices, on_delete=models.PROTECT, default=Status.EASY, related_name='ghosts')
-    img_url = models.TextField()
+    img_url = models.TextField(blank=True, null=True)
     description = models.TextField(max_length=500)
     tags = models.ManyToManyField('TagGhost', blank=True, related_name='tags')
 

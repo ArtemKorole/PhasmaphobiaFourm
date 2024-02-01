@@ -3,12 +3,15 @@
 
 {% block content %}
 
-{% for i in ghosts %}
-    <a href = "{{ i.get_absolute_url }}"  class = 'ref'><h1>{{i.name}}</h1></a>
-    <h2>Описание:</h2>
-    <p>{{i.description}}</p>
-    <strong><p>Номер в журнале:{{i.number}}</p></strong>
-    <img class = "ghost_img" src="{{i.img_url}}" alt="">
-{% endfor %}
+<div class="container">
+    {% for i in ghosts %}
+    <div class="ghost_cart">
+        <a href="{{ i.get_absolute_url }}" class="ref2"><h1>{{i.name}}</h1></a>
+        <h2>Описание:</h2>
+        <p>{{i.description}}</p>
+        <strong><p>Номер в журнале:{{i.number}}</p></strong>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock %}
