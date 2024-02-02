@@ -7,8 +7,8 @@ from .forms import AddGhostSearchForm
 
 def index(request):
     if request.method == 'POST':
-        name = request.POST['ghost_name']
-        ghost = get_ghost_by_name(name)
+        id = request.POST['name']
+        ghost = get_ghost_by_id(id)
         if not ghost is None:
             return redirect(ghost[0].get_absolute_url())
 
