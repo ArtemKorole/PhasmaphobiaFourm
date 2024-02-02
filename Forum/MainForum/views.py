@@ -2,7 +2,7 @@ from django.shortcuts import render
 from MainForum.models import *
 from .services import *
 from django.shortcuts import redirect
-from .forms import AddGhostSearchForm 
+from .forms import GhostSearchForm 
 
 
 def index(request):
@@ -17,7 +17,7 @@ def index(request):
         'all_carts': Map.objects.all(),
         'all_ghost_events': Ghost_event.objects.all(),
         'all_evidences': Evidence.objects.all(),
-        'form':AddGhostSearchForm()
+        'form':GhostSearchForm()
     }
     return render(request, 'MainForum/index.html', data)
 
