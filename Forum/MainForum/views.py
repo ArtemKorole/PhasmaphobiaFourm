@@ -1,25 +1,28 @@
+from typing import Any
 from django.shortcuts import render
 from MainForum.models import *
 from .services import *
 from django.shortcuts import redirect
-from .forms import GhostSearchForm 
+from .forms import GhostSearchForm
+from django.views import View
+from django.views.generic import TemplateView, ListView
 
 
-def index(request):
-    if request.method == 'POST':
+class MainPage(View):
+    def get(self, request):
+        data = {
+            'categories': Ghost_category.objects.all(),
+            'all_carts': Map.objects.all(),
+            'all_ghost_events': Ghost_event.objects.all(),
+            'all_evidences': Evidence.objects.all(),
+            'form': GhostSearchForm()
+        }
+        return render(request, 'MainForum/index.html', data)
+
+    def post(self, request):
         id = request.POST['name']
-        ghost = get_ghost_by_id(id)
-        if not ghost is None:
-            return redirect(ghost[0].get_absolute_url())
-
-    data = {
-        'categories': Ghost_category.objects.all(),
-        'all_carts': Map.objects.all(),
-        'all_ghost_events': Ghost_event.objects.all(),
-        'all_evidences': Evidence.objects.all(),
-        'form':GhostSearchForm()
-    }
-    return render(request, 'MainForum/index.html', data)
+        ghost = get_ghost_by_id(id)[0]
+        return redirect(ghost.get_absolute_url())
 
 
 def ghost_category(request, id: int):
@@ -28,26 +31,32 @@ def ghost_category(request, id: int):
     }
     return render(request, 'MainForum/ghost_categories.html', data)
 
-def ghost_slug(request, ghost_slug: str):
-    data = {
-        'ghost': get_ghost_by_slug(ghost_slug).select_related('category')[0],
-        'tags': get_tags_by_ghost_slug(ghost_slug).prefetch_related('tags')
-    }
-    return render(request, 'MainForum/ghost.html', data)
 
-def ghost(request, id: int):
-    data = {
-        'ghost': get_ghost_by_id(id).select_related('category')[0],
-        'tags': get_tags_by_ghost_id(id).prefetch_related('tags')
-    }
-    return render(request, 'MainForum/ghost.html', data)
+class Ghost_by_Slug(View):
+    def get(self, request, ghost_slug):
+        data = {
+            'ghost': get_ghost_by_slug(ghost_slug).select_related('category')[0],
+            'tags': get_tags_by_ghost_slug(ghost_slug).prefetch_related('tags')
+        }
+        return render(request, 'MainForum/ghost.html', data)
 
 
-def journal(request):
-    data = {
-        'all_ghosts': Ghost.objects.all().order_by('number'),
-    }
-    return render(request, 'MainForum/journal.html', data)
+class Ghost_by_Id(View):
+    def get(self, request, id):
+        data = {
+            'ghost': get_ghost_by_id(id).select_related('category')[0],
+            'tags': get_tags_by_ghost_id(id).prefetch_related('tags')
+        }
+        return render(request, 'MainForum/ghost.html', data)
+
+
+class Journal(ListView):
+    model = Ghost
+    template_name = 'MainForum/journal.html'
+    context_object_name = 'all_ghosts'
+
+    def get_queryset(self):
+        return Ghost.objects.all().order_by('number')
 
 
 def cart(request, id: int):
@@ -57,14 +66,19 @@ def cart(request, id: int):
     return render(request, 'MainForum/cart.html', data)
 
 
-def about(request):
-    return render(request, 'MainForum/about.html')
+class AboutPage(TemplateView):
+    template_name = 'MainForum/about.html'
 
-def get_ghosts_by_tag(request, tag_slug):
-    return render(request, 'MainForum/ghosts_by_tag.html', get_ghosts_by_tag_slug(tag_slug) )
 
-def show_tags(request):
-    data = {
-        'tags':get_all_tags()
-    }
-    return render(request, "MainForum/tags_list.html", data)
+class Ghosts_by_Tag(View):
+    def get(self, request, tag_slug):
+        return render(request, 'MainForum/ghosts_by_tag.html', get_ghosts_by_tag_slug(tag_slug))
+
+
+class Tags(ListView):
+    model = TagGhost
+    template_name = 'MainForum/tags_list.html'
+    context_object_name = 'tags'
+
+    def get_queryset(self):
+        return get_all_tags()
