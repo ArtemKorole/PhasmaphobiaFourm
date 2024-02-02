@@ -5,7 +5,7 @@ from .services import *
 from django.shortcuts import redirect
 from .forms import GhostSearchForm
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 
 
 class MainPage(View):
@@ -25,20 +25,32 @@ class MainPage(View):
         return redirect(ghost.get_absolute_url())
 
 
-def ghost_category(request, id: int):
-    data = {
-        'ghosts': get_ghosts_by_cat_id(id).select_related('category'),
-    }
-    return render(request, 'MainForum/ghost_categories.html', data)
+class Ghosts_by_Category(ListView):
+    model = Ghost
+    template_name = 'MainForum/ghost_categories.html'
+    context_object_name = 'ghosts'
+
+    def get_queryset(self):
+        return get_ghosts_by_cat_id(self.kwargs['id']).select_related('category')
 
 
-class Ghost_by_Slug(View):
-    def get(self, request, ghost_slug):
-        data = {
-            'ghost': get_ghost_by_slug(ghost_slug).select_related('category')[0],
-            'tags': get_tags_by_ghost_slug(ghost_slug).prefetch_related('tags')
-        }
-        return render(request, 'MainForum/ghost.html', data)
+class Ghost_by_Slug(DetailView):
+    model = Ghost
+    template_name = 'MainForum/ghost.html'
+    slug_url_kwarg = 'ghost_slug'
+    context_object_name = 'ghost'
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]: #FIXME
+        context = super().get_context_data(**kwargs)
+        context['tags'] = get_tags_by_ghost_slug(self.slug_url_kwarg).prefetch_related('tags')
+        return context
+    
+
+    # def get(self, request, ghost_slug):
+    #     data = {
+    #         'ghost': get_ghost_by_slug(ghost_slug).select_related('category')[0],
+    #         'tags': get_tags_by_ghost_slug(ghost_slug).prefetch_related('tags')
+    #     }
+    #     return render(request, 'MainForum/ghost.html', data)
 
 
 class Ghost_by_Id(View):
