@@ -1,14 +1,14 @@
 from django.shortcuts import render
-
 from MainForum.models import *
 from .services import *
 from django.shortcuts import redirect
+from .forms import GhostSearchForm 
 
 
 def index(request):
     if request.method == 'POST':
-        name = request.POST['ghost_name']
-        ghost = get_ghost_by_name(name)
+        id = request.POST['name']
+        ghost = get_ghost_by_id(id)
         if not ghost is None:
             return redirect(ghost[0].get_absolute_url())
 
@@ -17,6 +17,7 @@ def index(request):
         'all_carts': Map.objects.all(),
         'all_ghost_events': Ghost_event.objects.all(),
         'all_evidences': Evidence.objects.all(),
+        'form':GhostSearchForm()
     }
     return render(request, 'MainForum/index.html', data)
 

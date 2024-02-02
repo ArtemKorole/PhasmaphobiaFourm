@@ -15,11 +15,10 @@
     {% endfor %}
 
     <form action="/" method="post">{% csrf_token %}
-        <input class = 'input' type="text" name="ghost_name">
-        <input type="submit" value="Найти">
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        <p class = "ghost_input" ><label for="{{ from.name.id_for_label }}">{{ form.name.label }}</label>: {{ form.name }}</p>
+        <input type="submit" value="Найти" class = "but2">
     </form><br>
-
-    <a class = "ref" href = "{% url 'journal' %}"><button class = "but1">Открыть журнал</button></a>
 
     <h1 class = 'header1'>Карты игры</h1>
     <ul>
