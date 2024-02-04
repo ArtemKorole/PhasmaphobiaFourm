@@ -40,7 +40,7 @@ class Ghost_by_Slug(DetailView):
     slug_url_kwarg = 'ghost_slug'
     context_object_name = 'ghost'
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:  # FIXME
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['tags'] = get_tags_by_ghost_slug(
             context['ghost'].slug).prefetch_related('tags')
