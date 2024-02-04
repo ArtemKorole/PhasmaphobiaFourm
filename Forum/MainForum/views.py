@@ -1,8 +1,7 @@
 from typing import Any
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from MainForum.models import *
 from .services import *
-from django.shortcuts import redirect
 from .forms import GhostSearchForm
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
@@ -29,6 +28,7 @@ class Ghosts_by_Category(ListView):
     model = Ghost
     template_name = 'MainForum/ghost_categories.html'
     context_object_name = 'ghosts'
+    allow_empty = False
 
     def get_queryset(self):
         return get_ghosts_by_cat_id(self.kwargs['id']).select_related('category')
@@ -39,43 +39,29 @@ class Ghost_by_Slug(DetailView):
     template_name = 'MainForum/ghost.html'
     slug_url_kwarg = 'ghost_slug'
     context_object_name = 'ghost'
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]: #FIXME
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['tags'] = get_tags_by_ghost_slug(self.slug_url_kwarg).prefetch_related('tags')
+        context['tags'] = get_tags_by_ghost_slug(
+            context['ghost'].slug).prefetch_related('tags')
         return context
-    
-
-    # def get(self, request, ghost_slug):
-    #     data = {
-    #         'ghost': get_ghost_by_slug(ghost_slug).select_related('category')[0],
-    #         'tags': get_tags_by_ghost_slug(ghost_slug).prefetch_related('tags')
-    #     }
-    #     return render(request, 'MainForum/ghost.html', data)
-
-
-class Ghost_by_Id(View):
-    def get(self, request, id):
-        data = {
-            'ghost': get_ghost_by_id(id).select_related('category')[0],
-            'tags': get_tags_by_ghost_id(id).prefetch_related('tags')
-        }
-        return render(request, 'MainForum/ghost.html', data)
 
 
 class Journal(ListView):
     model = Ghost
     template_name = 'MainForum/journal.html'
     context_object_name = 'all_ghosts'
+    allow_empty = False
 
     def get_queryset(self):
         return Ghost.objects.all().order_by('number')
 
 
-def cart(request, id: int):
-    data = {
-        'cart': get_cart_by_id(id),
-    }
-    return render(request, 'MainForum/cart.html', data)
+class Cart(DetailView):
+    model = Map
+    template_name = 'MainForum/cart.html'
+    context_object_name = 'cart'
+    pk_url_kwarg = 'id'
 
 
 class AboutPage(TemplateView):

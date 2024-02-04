@@ -3,18 +3,16 @@
 
 {% block content %}
 
-<div class="container">
-    <h1>{{ ghost.name }}</h1>
+<div class="ghost_container">
+    <h1 style = "font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;font-size:40px">{{ ghost.name }}</h1><br>
     <h2>Описание:</h2>
     <p>{{ ghost.description }}</p>
-    <strong><p>Номер в <a href = "{% url 'journal' %}">журнале</a> {{ ghost.number }}</p></strong>
-    <img class = "ghost_img" src="{{ ghost.img_url }}" alt="">
+    <strong><p>Номер в <a href = "{% url 'journal' %}">журнале</a> {{ ghost.number }}</p></strong><br>
+    {% comment %} <img class = "ghost_img" src="{{ ghost.img_url }}" alt=""> {% endcomment %}
     <h2>Теги этого призрака:</h2>
-    <ul>
-        {% for i in tags %}
-            <li><a href = "{{ i.get_absolute_url }}">{{ i.tag }}</a></li>
-        {% endfor %}
-    </ul>
+    {% for i in tags %}
+        <a href = "{{ i.get_absolute_url }}">{{ i.tag }}</a><br>
+    {% endfor %}
 </div>
 
 {% endblock %}
